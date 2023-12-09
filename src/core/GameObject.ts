@@ -16,13 +16,14 @@ export abstract class GameObject {
   abstract getBoundaries(): Boundaries;
 
   intersects(obj: GameObject): boolean {
-    const boundaries = this.getBoundaries();
+    const { left, right, top, bottom } = this.getBoundaries();
+    const oBoundaries = obj.getBoundaries();
 
     return (
-      boundaries.left < obj.getBoundaries().right &&
-      boundaries.right > obj.getBoundaries().left &&
-      boundaries.top < obj.getBoundaries().bottom &&
-      boundaries.bottom > obj.getBoundaries().top
+      left < oBoundaries.right &&
+      right > oBoundaries.left &&
+      top < oBoundaries.bottom &&
+      bottom > oBoundaries.top
     );
   }
 }
@@ -37,6 +38,12 @@ export abstract class DGameObject extends GameObject implements Drawable {
   abstract draw(ctx: CanvasRenderingContext2D): void;
 }
 
-export abstract class UDGameObject extends UGameObject implements Drawable {
+export abstract class UDGameObject
+  extends GameObject
+  implements Updatable, Drawable
+{
+  hasGravity: boolean = false;
+
+  abstract update(deltaTime: number): void;
   abstract draw(ctx: CanvasRenderingContext2D): void;
 }

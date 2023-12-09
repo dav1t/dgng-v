@@ -119,7 +119,9 @@ export class Robo extends UDGameObject {
       this.currentFrame = 0;
     }
 
-    this.velocity.x *= 0.8;
+    if (this.hasGravity) {
+      this.velocity.x *= 0.8;
+    }
   }
 
   draw(ctx: CanvasRenderingContext2D): void {
@@ -161,7 +163,7 @@ export class Robo extends UDGameObject {
       const spriteItemWidth = sprite.width / 9;
       const spriteItemHeight = sprite.height / 4;
 
-      for (let i = 0; i < 4; i++) {
+      for (let i = 0; i < 5; i++) {
         const frames = [];
 
         for (let j = 0; j < 9; j++) {
@@ -198,7 +200,6 @@ export class Robo extends UDGameObject {
     if (bound.bottom > this.context.canvas.height) {
       this.position.y = this.context.canvas.height - bound.height;
       this.velocity.y = 0;
-      // this.state.jump = false;
     }
   }
 }
